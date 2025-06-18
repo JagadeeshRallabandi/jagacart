@@ -1,19 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { useAppContext } from '../../context/AppContext'
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const SellerLogin = () => {
-  const {isSeller, setIsSeller, navigate} = useAppContext();
+  const {isSeller, setIsSeller, navigate, axios} = useAppContext();
   const [email, setEmail] = useState("");
   const [password , setPassword] = useState("") 
+  
+  const onSubmitHandler = async (event) => {
+    try {
+      event.preventDefault();
+      const {data} = await axios.post('/api/seller/login',{email, password})
+      if(data.success){
+          setIsSeller(true)
+          navigate('/seller')
+      }else{
+        toast.error(data.message)
+      }
+
+
+    } catch (error) {
+      toast.error(error.message)
+    }
+    
+  }
+  
   useEffect(()=>{
     if(isSeller){
         navigate("/seller");
     }
   },[isSeller])
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
-    setIsSeller(true);
-  }
+ 
   return (
     <form onSubmit={onSubmitHandler} className='min-h-screen flex items-center text-sm text-gray-600'>
         <div className='flex flex-col gap-5 m-auto items-start p-8 py-12 min-w-80 sm:min-w-88
