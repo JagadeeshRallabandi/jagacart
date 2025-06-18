@@ -149,6 +149,7 @@ useEffect(()=>{
     addToCart,
     updateCartItem,
     removeFromCart,
+    setCartItems,
     cartItems,
     searchQuery,
     setSearchQuery,
