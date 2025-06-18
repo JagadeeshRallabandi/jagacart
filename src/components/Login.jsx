@@ -10,7 +10,7 @@ const Login = () => {
     const [password, setPassword] = React.useState("");
     const onSubmitHandler = async (event) => {       
         try {
-            event.preventDefault();
+            event.preventDefault();  
 
             const{data} = await axios.post(`/api/user/${state}`, {
               name, email, password  
@@ -22,6 +22,7 @@ const Login = () => {
             }else{
                 toast.error(data.message);
             }
+            
         } catch (error) {
             toast.error(error.message)
         }
